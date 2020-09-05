@@ -228,7 +228,7 @@ function toCsvText(arr) {
   for (let i = 0; i < arr.length; i += 1) {
     csvRows.push(arr[i].join(','));
   }
-  const csvString = csvRows.join('\r\n');
+  const csvString = csvRows.join('\n');
   return csvString;
 }
 
@@ -497,8 +497,19 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  arr.sort((a, b) => {
+    const af = a.country;
+    const bf = b.country;
+    const as = a.city;
+    const bs = b.city;
+    if (af === bf) {
+      if (as < bs) return -1;
+      if (as > bs) return 1;
+      return 0;
+    }
+    return (af < bf) ? -1 : 1;
+  });
 }
 
 /**
@@ -519,8 +530,14 @@ function sortCitiesArray(/* arr */) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  return Array(n).fill(0).map((elem, i) => {
+    const c = n;
+    return Array(c).fill(0).map((elem2, j) => {
+      const s = 1 - Math.min(Math.abs(i - j), 1);
+      return s;
+    });
+  });
 }
 
 /**
@@ -536,8 +553,12 @@ function getIdentityMatrix(/* n */) {
  *     0, 100 => [ 0, 1, 2, ..., 100 ]
  *     3, 3   => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
-  throw new Error('Not implemented');
+function getIntervalArray(start, end) {
+  const res = [];
+  for (let i = start; i <= end; i += 1) {
+    res.push(i);
+  }
+  return res;
 }
 
 /**
@@ -551,8 +572,8 @@ function getIntervalArray(/* start, end */) {
  *   [ 'a', 'a', 'a', 'a' ]  => [ 'a' ]
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
-function distinct(/* arr */) {
-  throw new Error('Not implemented');
+function distinct(arr) {
+  return arr.filter((v, i, a) => a.indexOf(v) === i);
 }
 
 /**
@@ -643,8 +664,11 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  const head = arr.slice(0, Math.round((arr.length - 1) / 2));
+  const tail = arr.slice(Math.round(arr.length / 2), arr.length);
+  const center = arr.slice(Math.round((arr.length - 1) / 2), Math.round(arr.length / 2));
+  return [].concat(tail, center, head);
 }
 
 
