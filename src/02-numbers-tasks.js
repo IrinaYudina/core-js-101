@@ -111,7 +111,8 @@ function getLinearEquationRoot(a, b) {
  *   (0,1) (1,2)     => 0
  */
 function getAngleBetweenVectors(x1, y1, x2, y2) {
-  return Math.atan2(y2 - y1, x2 - x1);
+  const angle = Math.abs(Math.atan2(y2, x2) - Math.atan2(y1, x1));
+  return angle;
 }
 
 /**
@@ -225,7 +226,7 @@ function isPrime(n) {
  */
 function toNumber(value, def) {
   const num = Number(value);
-  if ((typeof num) === 'number' || value instanceof Number) {
+  if (num && (typeof num) === 'number') {
     return num;
   }
   return def;
